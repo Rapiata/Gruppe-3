@@ -17,9 +17,14 @@ if __name__ == "__main__":
         print("Ungültige Eingabe, probier nochmal...")
         input_text = input("Was möchtest du mit der API tun?\n")
 
+    # Zusatz: Welcher User?
+    input_username = input("Für welchen User möchtest du die Aktion ausführen?\n")
+
     if input_text == "auslesen":
         # controller soll alle repositories auslesen
-        pass
+        controller.get_user_repos(input_username)
+
     elif input_text == "anlegen":
         # controller soll neues repository anlegen
-        pass
+        input_repo_name = input("Wie soll das neue Repository heißen?\n")
+        controller.create_repo(input_username, input_repo_name)
