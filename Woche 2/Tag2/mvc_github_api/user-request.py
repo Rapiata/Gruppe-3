@@ -25,6 +25,8 @@ if __name__ == "__main__":
         controller.get_user_repos(input_username)
 
     elif input_text == "anlegen":
-        # controller soll neues repository anlegen
+        # Zusatz: Repo Name?
         input_repo_name = input("Wie soll das neue Repository heißen?\n")
+
+        # controller soll neues repository anlegen
         controller.create_repo(input_username, input_repo_name)
