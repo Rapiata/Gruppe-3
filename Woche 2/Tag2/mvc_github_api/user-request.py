@@ -1,7 +1,6 @@
 import controller
 
 if __name__ == "__main__":
-    print("Hello World")
 
     # Anforderungen an die API:
     # 1. Alle Repositories eines Users auslesen

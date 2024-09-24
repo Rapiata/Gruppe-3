@@ -11,12 +11,28 @@ def get_user_repos(username):
         # model speichert die Daten / extrahiert die daten
         repo_names = model.extract_repo_names(repos)
 
-        # view...
+        # view zeigt die Daten an
+        view.output_repo_names(repo_names)
+
     else:
         # view generiert einen Error
-        print("Error")
-        pass
+        view.output_error(
+            "GET /users/{username}/repos, status code:" + str(response.status_code)
+        )
 
 
 def create_repo(username, repo_name):
-    pass
+    response = requests.post(
+        BASE_URL + f"/user/repos",
+        json={"name": repo_name},
+        auth=(username, GITHUB_TOKEN),
+    )
+    if response.status_code == 201:
+        data = response.json()
+        # model speichert die neuen Daten / extrahiert die daten
+        repo_name = model.extract_repo_names([data])
+        # view zeigt eine Erfolgsnachricht an
+        view.output_repo_created(repo_name[0])
+    else:
+        # view generiert einen Error
+        view.output_error("POST /user/repos, status code:" + str(response.status_code))
