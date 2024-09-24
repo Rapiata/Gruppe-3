@@ -5,11 +5,12 @@ Erstelle dazu zwei Dateien, eine mit einer Funktion, die die Summe berechnet und
 
 """
 
-import Tag2_func
+import Tag2_berechnung
 
 
 def summe(n):
-    return Tag2_func.sum_from_range(n)
+    return Tag2_berechnung.sum_from_range(n)
 
 
-print(summe(10))
+if __name__ == "__main__":
+    print(summe(10))
