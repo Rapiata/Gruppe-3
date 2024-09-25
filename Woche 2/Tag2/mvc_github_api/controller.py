@@ -25,7 +25,10 @@ def create_repo(username, repo_name):
     response = requests.post(
         BASE_URL + f"/user/repos",
         json={"name": repo_name},
-        auth=(username, GITHUB_TOKEN),
+        auth=(
+            username,
+            GITHUB_TOKEN,
+        ),  # Basic Auth - Ganz wichtig, da die meisten APIs nicht ohne Authentifizierung funktionieren
     )
     if response.status_code == 201:
         data = response.json()
