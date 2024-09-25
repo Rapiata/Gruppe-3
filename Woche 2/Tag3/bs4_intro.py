@@ -15,5 +15,6 @@ response = requests.get(BASE_URL)
 soup = BeautifulSoup(response.text, "html.parser")
 
 titles = soup.find_all("h2", class_="title is-5")
+print("Anzahl der Stellenangebote: ", len(titles))
 for title in titles:
     print(title.text)
