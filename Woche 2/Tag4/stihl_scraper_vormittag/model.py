@@ -29,6 +29,15 @@ def extract_product_categories(soup: BeautifulSoup) -> list[ProductCategory]:
     return product_categories
 
 
+@dataclass
+class Product:
+    name: str
+    price: float
+    short_description: str
+    available: bool
+    review: float
+
+
 def extract_product_details(soup: BeautifulSoup) -> list[dict]:
     # webscraping magic
 
@@ -39,7 +48,26 @@ def extract_product_details(soup: BeautifulSoup) -> list[dict]:
     # 2. Alle Informationen aus dem Element extrahieren
     product_details = []
     for product in products:
-        pass
+        # produktname
+        name = product.find("span", class_="tile_product-standard__title-inner").text
+        # preis
+        price = product.find("span", attrs={"data-test-id": "product-buy-price"}).text
+        print(price)  # TODO: konvertiere zu float
+
+        # short description
+        short_description = product.find(
+            "div", class_="tile_product-standard__subline"
+        ).text
+        # auf lager
+        available = (
+            product.find("div", class_="tile_product-standard__status").text
+            == "Auf Lager"
+        )
+        # bewertung - TODO
+        # review = product.find("div", class_="bv_text").text
+
+        # TODO: Produktklasse erstellen
+        # TODO: product_details append
 
     # returns list of product details: {'product': 'product_name', 'price': 'product_price', ...}
     return product_details
