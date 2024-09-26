@@ -75,11 +75,3 @@ df.to_csv("jobs.csv", index=False)
 
 # Zusatz:
 # CSV im richtigen Ordner abspeichern
-
-
-# Wenn wir Jobs mit Auslaufdatum haben, wollen wir diese automatisch löschen - Wie machen wir das?
-
-# 0. Einen Server einrichten
-# 1. Eine Datenbank einrichten, die die Jobs speichert
-# 2. Einen Scheduler einrichten (einmal am Tag um 18 Uhr), der die Jobs regelmäßig abruft und prüft
-# 3. Die Jobs aus der Datenbank löschen, die abgelaufen sind
