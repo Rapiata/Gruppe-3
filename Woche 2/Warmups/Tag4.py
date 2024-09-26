@@ -39,4 +39,4 @@ dic2 = {1: 30, 4: 40}
 dic3 = {1: 50, 6: 60}
 
 res = concat_dict(dic1, dic2, dic3)
-print(res)
+print("res:", res)
