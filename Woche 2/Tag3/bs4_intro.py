@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoupich 
 
 BASE_URL = "https://realpython.github.io/fake-jobs/"
 
