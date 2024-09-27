@@ -1,12 +1,41 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from bs4 import BeautifulSoup
+from sqlmodel import Field, SQLModel, create_engine, select
+
+# TODO: Database anbinden
+engine = None
 
 
 @dataclass
 class ProductCategory:
     category: str
     path: str
+
+
+# So war das voher
+# @dataclass
+# class Product:
+#     name: str
+#     price: float
+#     short_description: str
+#     available: bool
+#     review: float
+
+
+class Product(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    price: float
+    short_description: str
+    available: bool
+
+
+def initialize_db():
+    global engine
+    engine = create_engine("sqlite:///./stihl-products.db")
+    SQLModel.metadata.create_all(engine)
 
 
 def extract_product_categories(soup: BeautifulSoup) -> list[ProductCategory]:
@@ -40,10 +69,14 @@ class Product:
 
 def extract_product_details(soup: BeautifulSoup) -> list[dict]:
     # webscraping magic
+    global engine
 
     # 1. Auf wichtiges Element referenzieren
     grid = soup.find("div", class_="m_category-overview-tiles__products")
     products = grid.find_all("a")
+
+    if not engine:
+        raise Exception("No Engine for DB found")
 
     # 2. Alle Informationen aus dem Element extrahieren
     product_details = []
