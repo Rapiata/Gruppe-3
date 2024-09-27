@@ -25,10 +25,10 @@ SQLModel.metadata.create_all(engine)
 ## Wir gehen die CRUD Operation durch...
 
 # CREATE
-# with Session(engine) as session:
-#     session.add(hero1)
-#     session.add(hero2)
-#     session.commit()
+with Session(engine) as session:
+    session.add(hero1)
+    session.add(hero2)
+    session.commit()
 
 
 # READ
@@ -54,4 +54,23 @@ with Session(engine) as session:
         hero.name = "Spiderkid"
 
         session.add(hero)
+        session.commit()
+
+
+# DELETE
+with Session(engine) as session:
+    # Einen Einträge löschen
+    hero = session.exec(select(Hero).where(Hero.name == "Spiderkid")).first()
+    if hero:
+        session.delete(hero)
+        session.commit()
+
+
+with Session(engine) as session:
+    # Alle Einträge löschen
+    heroes = session.exec(select(Hero)).all()
+    print("\n")
+    for hero in heroes:
+        print("deleting hero:", hero)
+        session.delete(hero)
         session.commit()
