@@ -25,10 +25,10 @@ SQLModel.metadata.create_all(engine)
 ## Wir gehen die CRUD Operation durch...
 
 # CREATE
-with Session(engine) as session:
-    session.add(hero1)
-    session.add(hero2)
-    session.commit()
+# with Session(engine) as session:
+#     session.add(hero1)
+#     session.add(hero2)
+#     session.commit()
 
 
 # READ
@@ -36,3 +36,22 @@ with Session(engine) as session:
     # exec = execute command
     # all = alle Einträge, die einen Match hatten -> hier ist das die komplette Tabelle
     heroes = session.exec(select(Hero)).all()
+    print("\nall heroes")
+    for hero in heroes:
+        print(hero)
+
+
+with Session(engine) as session:
+    # Ersten Eintrag auslesen
+    hero = session.exec(select(Hero)).first()
+    print("\nfirst hero:", hero)
+
+
+# UPDATE
+with Session(engine) as session:
+    hero = session.exec(select(Hero).where(Hero.name == "Spiderboi")).first()
+    if hero:
+        hero.name = "Spiderkid"
+
+        session.add(hero)
+        session.commit()
