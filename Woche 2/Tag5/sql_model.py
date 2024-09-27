@@ -1,6 +1,6 @@
 from typing import Optional
 
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Field, Session, SQLModel, create_engine, delete, select
 
 
 # 1. Refernz zum SQL-Table
@@ -17,7 +17,7 @@ hero2 = Hero(name="Spiderboi")
 
 
 # Der Motor, der zwischen Python und der Datenbank sitzt und arbeitet
-engine = create_engine("sqlite:///heroes.db")  # -> wir verwenden SQLITE
+engine = create_engine("sqlite:///./heroes.db")  # -> wir verwenden SQLITE
 # Registriert alle Tabellen, die wir in unserem Skript erstellen und erstellt diese in der Datenbank, wenn sie nicht existieren.
 SQLModel.metadata.create_all(engine)
 
@@ -58,19 +58,32 @@ with Session(engine) as session:
 
 
 # DELETE
-with Session(engine) as session:
-    # Einen Einträge löschen
-    hero = session.exec(select(Hero).where(Hero.name == "Spiderkid")).first()
-    if hero:
-        session.delete(hero)
-        session.commit()
+# with Session(engine) as session:
+#     # Einen Einträge löschen
+#     hero = session.exec(select(Hero).where(Hero.name == "Spiderkid")).first()
+#     if hero:
+#         session.delete(hero)
+#         session.commit()
 
 
 with Session(engine) as session:
     # Alle Einträge löschen
-    heroes = session.exec(select(Hero)).all()
-    print("\n")
-    for hero in heroes:
-        print("deleting hero:", hero)
-        session.delete(hero)
-        session.commit()
+    session.exec(delete(Hero))
+    session.commit()
+
+
+# Komplette Datenbank löschen
+import os
+
+db_url = "sqlite:///./heroes.db"  # Modify this to your actual database path
+
+# Extract the actual file path from the database URL
+db_path = db_url.replace("sqlite:///", "")
+
+# Delete the database file
+if os.path.exists(db_path):
+    print("\npath to delete:", db_path)
+    os.remove(db_path)
+    print(f"Database {db_path} deleted.")
+else:
+    print(f"Database {db_path} does not exist.")
