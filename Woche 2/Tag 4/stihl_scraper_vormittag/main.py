@@ -1,10 +1,1 @@
-import controller
- 
-if __name__ == "__main__":
-    # 1. Alle Produktkategorien scrapen
-    # controller aufrufen und produktkategorien scrapen
-    produkt_categories = controller.scrape_product_categories()
- 
-    # 2. Allgemeine Produktdetails zu jedem Produkt scrapen
-    # controller aufrufen und alle Produkte scrapen
-    controller.scrape_products(produkt_categories)
+import controllerimport dbif __name__ == "__main__":    # 0. Erstmal DB initialisieren    db.initialize_db()    while True:        user_input = input(            "\nWelchen Befehl willst ausführen (scrape oder retrieve)?\n"        )        if user_input == "scrape":            # Webscraper laufen lassen            controller.scrape_new_products()        elif user_input == "redef check_if_product_exists(product: Product):    with Session(engine) as session:        existing_product = session.exec(            select(Product).where(Product.name == product.name)        ).first()        return existing_product is not Nonedef save_product_to_db(products: list[Product]):    with Session(engine) as session:        for product in products:            # Prüfe, ob das Produkt bereits existiert            if not check_if_product_exists(product):                print(f"Produkt {product.name} wurde erfolgreich gespeichert.")                session.add(product)            else:                existing_product = session.exec(                    select(Product).where(Product.name == product.name)                ).first()                if existing_product:                    # Update the existing product with new information                    existing_product.price = product.price                    existing_product.category = product.category                    existing_product.description = product.description                    existing_product.availability = product.availability                    session.add(existing_product)                    print(f"Produkt {product.name} wurde in der Datenbank aktualisiert.")                else:                    print(f"Fehler: Produkt {product.name} sollte existieren, wurde aber nicht gefunden.")        session.commit() 
